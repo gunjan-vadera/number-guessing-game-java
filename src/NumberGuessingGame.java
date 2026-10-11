@@ -1,5 +1,6 @@
 import java.util.Random;
 import java.util.Scanner;
+import java.util.InputMismatchException;
 
 public class NumberGuessingGame{
 	
@@ -30,10 +31,42 @@ public class NumberGuessingGame{
 	  System.out.println("1. Easy (1-50)");
 	  System.out.println("2. Medium (1-100)");
 	  System.out.println("3. Hard (1-500)");
-	  System.out.println("ENTER YOUR CHOICE");
-	  return sc.nextInt();
+	  
+	  while(true) {
+		  
+		  System.out.println("Enter your choice:");
+		  try {
+			  int choice = sc.nextInt();
+			  if(choice>=1 && choice <=3) {
+				  return choice;
+			  }
+			  System.out.println("Please choose 1 , 2 or 3.");
+		  }
+		  catch(InputMismatchException e) {
+			  System.out.println("That is not a number.. Please type a valid input");
+			  sc.next();
+		  }
+	  }
 	  
   }
+  static int getValidGuess(int max) {
+	  while(true) {
+		  System.out.println("Enter your Guess (1-" + max + "): ");
+		  
+		  try {
+			  int guess = sc.nextInt();
+			  if(guess >=1 && guess <= max) {
+			  return guess;
+		  }
+		  System.out.println("Number must be between 1 And " + max + "." );
+		  
+	  }catch(InputMismatchException e) {
+		  System.out.println("Please enter a valid Number!!");
+		  sc.next();
+	  }
+	  
+  }
+}
   static void playGame() {
 	 int level = chooseDifficulty();
 	 int max;
@@ -71,8 +104,7 @@ public class NumberGuessingGame{
 	  System.out.println("I have picked a number between 1 -"+ max +".");
 	  
 	  while(attempts < maxAttempts && !won) {
-		  System.out.println("Enter your Guess..");
-		  guess = sc.nextInt();
+		 guess = getValidGuess(max);
 		  attempts++;
 		  
 		  if(guess>secret){
