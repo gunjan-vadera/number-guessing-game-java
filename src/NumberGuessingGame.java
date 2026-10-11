@@ -24,32 +24,40 @@ public class NumberGuessingGame{
   static void playGame() {
 	 int level = chooseDifficulty();
 	 int max;
+	 int maxAttempts; // stores how many guesses are allowed
+	 
 	 
 	 switch(level) {
 	 case 1:
 		 max = 50;
+		 maxAttempts = Integer.MAX_VALUE; //is the largest possible int (about 2 billion). We use it to mean “unlimited”, because nobody will make that many guesses.
 		 break;
 		 
 	 case 2:
 		 max = 100;
+		 maxAttempts = 10;
 		 break;
 		 
 	 case 3:
 		 max = 500;
+		 maxAttempts = 8;
 		 break;
+		 
 	 default
 	 :
 		 System.out.println("Invalid choice , using Medium.");
 		 max = 100;
+		 maxAttempts = 10;
 		 
 	 }
 		 int secret = ran.nextInt(max)+1;
 		 int guess =0;
 		 int attempts =0; 
+		 boolean won = false;
 	
 	  System.out.println("I have picked a number between 1 -"+ max +".");
 	  
-	  while(guess!=secret) {
+	  while(attempts < maxAttempts && !won) {
 		  System.out.println("Enter your Guess..");
 		  guess = sc.nextInt();
 		  attempts++;
@@ -61,8 +69,16 @@ public class NumberGuessingGame{
 				  System.out.println("Number too low! Try higher Number..");
 			  }
 				  else {
+					  won = true;
 				  System.out.println("You Guessed It.."+ attempts + "Attempts");
-			  }
+				  }	  
+			if(!won && maxAttempts != Integer.MAX_VALUE) {
+				System.out.println("Attempts Left : "+(maxAttempts-attempts));
+			}
+			
 		  }
-	  }
+	  if(!won) {
+			System.out.println("You lost!! The number was "+ secret + ".");
+		}
+  }
 }
