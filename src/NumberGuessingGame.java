@@ -8,7 +8,20 @@ public class NumberGuessingGame{
     
   public static void main(String args[]) {
 	System.out.println("Welcome to the Number Guessing Game!!");
-	playGame();
+	
+	String again; // it stores the players's answer..
+	
+	do {
+	  playGame();
+	  
+	  System.out.println("Play Again1!? (Yes/No):");
+	  
+	  again = sc.next();
+	  
+	} while(again.equalsIgnoreCase("Yes"));
+	
+	System.out.println("Thanks for Playing!!");
+	
 	sc.close();
 	  
   }
